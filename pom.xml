@@ -57,6 +57,23 @@
 			<version>1.18.16</version>
 			<scope>provided</scope>
 		</dependency>
+		<!-- org.springframework.boot -->
+		<dependency>
+		    <groupId>org.springframework.boot</groupId>
+		    <artifactId>spring-boot-starter-data-jpa</artifactId>
+		</dependency>
+		<!-- com.h2database -->
+		<dependency>
+		     <groupId>com.h2database</groupId>
+		     <artifactId>h2</artifactId>
+		     <scope>runtime</scope>
+		</dependency>
+		<!-- org.springframework.boot -->
+		<dependency>
+		 <groupId>org.springframework.boot</groupId>
+		 <artifactId>spring-boot-devtools</artifactId>
+		</dependency>
+
 	</dependencies>
 
 	<build>
