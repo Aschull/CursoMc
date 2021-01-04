@@ -1,19 +1,14 @@
 package com.nelioalves.cursomc.domain;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
 public class Categoria implements Serializable {
   public static final long serivalVersionUID = 1L;
 
@@ -21,5 +16,14 @@ public class Categoria implements Serializable {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Integer id;
   private String nome;
+  @ManyToMany(mappedBy = "categorias")
+  private List<Produto> produtos = new ArrayList<>();
 
+  public Categoria(Integer id, String nome) {
+    this.id = id;
+    this.nome = nome;
+  }
+
+  public Categoria() {
+  }
 }
