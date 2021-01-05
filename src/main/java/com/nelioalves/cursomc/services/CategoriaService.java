@@ -25,7 +25,6 @@ public class CategoriaService {
       if(obj == null) {
         throw new ObjectNotFoundException("Objeto não encontrado! id:" + id + "| Tipo: " + Categoria.class.getName());
       }
-
     return obj;
   }
 }

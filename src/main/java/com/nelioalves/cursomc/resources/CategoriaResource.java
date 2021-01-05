@@ -27,7 +27,7 @@ public class CategoriaResource {
     this.categoriaService = categoriaService;
   }
 
- @GetMapping(value = "categorias/{id}")
+  @GetMapping(value = "categorias/{id}")
   public ResponseEntity<?> Listar(@PathVariable Integer id){
 
     Categoria obj = categoriaService.buscar(id);
