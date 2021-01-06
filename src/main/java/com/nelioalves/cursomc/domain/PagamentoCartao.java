@@ -1,12 +1,10 @@
 package com.nelioalves.cursomc.domain;
 
 import com.nelioalves.cursomc.domain.enums.EstadoPagamento;
-import lombok.Data;
 
 import javax.persistence.Entity;
 
 @Entity
-@Data
 public class PagamentoCartao extends Pagamento{
   public static final long serivalVersionUID = 1L;
 
@@ -19,4 +17,16 @@ public class PagamentoCartao extends Pagamento{
   }
 
   private Integer numeroParcela;
+
+  public static long getSerivalVersionUID() {
+    return serivalVersionUID;
+  }
+
+  public Integer getNumeroParcela() {
+    return numeroParcela;
+  }
+
+  public void setNumeroParcela(Integer numeroParcela) {
+    this.numeroParcela = numeroParcela;
+  }
 }

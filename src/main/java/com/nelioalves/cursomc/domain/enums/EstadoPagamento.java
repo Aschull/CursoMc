@@ -12,7 +12,7 @@ public enum EstadoPagamento {
   private Integer cod;
   private String desc;
 
-  EstadoPagamento(Integer cod, String desc) {
+  private EstadoPagamento(Integer cod, String desc) {
     this.cod = cod;
     this.desc = desc;
   }
