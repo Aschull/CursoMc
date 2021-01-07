@@ -7,6 +7,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Data
@@ -29,5 +30,18 @@ public class Estado implements Serializable {
   @JsonBackReference
   @OneToMany(mappedBy = "estado")
   private List<Cidade> cidades = new ArrayList<>();
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    Estado estado = (Estado) o;
+    return id.equals(estado.id);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(id);
+  }
 }
 

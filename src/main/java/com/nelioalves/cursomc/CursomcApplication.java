@@ -16,7 +16,7 @@ import java.util.Arrays;
 public class CursomcApplication implements CommandLineRunner {
 
 
-	public CursomcApplication(CategoriaRepository categoriaRepository, ProdutoRepository produtoRepository, CidadeRepository cidadeRepository, EstadoRepository estadoRepository, EnderecoRepository enderecoRepository, ClienteRepository clienteRepository, PedidoRepository pedidoRepository, PagamentoRepository pagamentoRepository) {
+	public CursomcApplication(CategoriaRepository categoriaRepository, ProdutoRepository produtoRepository, CidadeRepository cidadeRepository, EstadoRepository estadoRepository, EnderecoRepository enderecoRepository, ClienteRepository clienteRepository, PedidoRepository pedidoRepository, PagamentoRepository pagamentoRepository, ItemPedidoRepository itemPedidoRepository) {
 		this.categoriaRepository = categoriaRepository;
 		this.produtoRepository = produtoRepository;
 		this.cidadeRepository = cidadeRepository;
@@ -25,6 +25,7 @@ public class CursomcApplication implements CommandLineRunner {
 		this.clienteRepository = clienteRepository;
 		this.pedidoRepository = pedidoRepository;
 		this.pagamentoRepository = pagamentoRepository;
+		this.itemPedidoRepository = itemPedidoRepository;
 	}
 
 	private CategoriaRepository categoriaRepository;
@@ -35,6 +36,7 @@ public class CursomcApplication implements CommandLineRunner {
 	private ClienteRepository clienteRepository;
 	private PedidoRepository pedidoRepository;
 	private PagamentoRepository pagamentoRepository;
+	private ItemPedidoRepository itemPedidoRepository;
 
 	public static void main(String[] args) {
 		SpringApplication.run(CursomcApplication.class, args);
@@ -44,6 +46,11 @@ public class CursomcApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 
+		/*
+		*-------------------------------------
+		*|       Instância das Classes       |
+		*-------------------------------------
+		*/
 		Categoria cat1 = new Categoria(null, "Informática");
 		Categoria cat2 = new Categoria(null, "Escritório");
 
@@ -58,24 +65,35 @@ public class CursomcApplication implements CommandLineRunner {
 		Cidade c2 = new Cidade(null, "São Paulo", est2);
 		Cidade c3 = new Cidade(null, "Campinas", est2);
 
-
 		Cliente cli1 = new Cliente(null, "Maria SIlva", "maria@gmail.com", "36378912377", TipoCliente.PESSOAFISICA);
 		  cli1.getTelefones().addAll(Arrays.asList("27363323", "93838393"));
 
 		Endereco e1 = new Endereco(null, "Rua Flores", "300", "Apto 303", "Jardim", "38220834", cli1, c1);
 		Endereco e2 = new Endereco(null, "Avenida Matos", "105", "Sala 800", "Centro", "38777012", cli1, c2);
 
+
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+
 
 		Pedido ped1 = new Pedido(null, sdf.parse("30/09/2017 10:23"), cli1, e1);
 		Pedido ped2 = new Pedido(null, sdf.parse("10/10/2017 19:35"), cli1, e2);
 
 		Pagamento pgto1 = new PagamentoCartao(null, EstadoPagamento.QUITADO, ped1, 6);
-		ped1.setPagamento(pgto1);
+		  ped1.setPagamento(pgto1);
 
 		Pagamento pgto2 = new PagamentoBoleto(null, EstadoPagamento.PENDENTE, ped2, sdf.parse("20/10/2017 00:00"), null);
-		ped2.setPagamento(pgto2);
+		  ped2.setPagamento(pgto2);
 
+		ItemPedido ip1 = new ItemPedido(ped1, p1, 0.00, 1, 2000.00);
+		ItemPedido ip2 = new ItemPedido(ped1, p3, 0.00, 2, 80.00);
+		ItemPedido ip3 = new ItemPedido(ped2, p2, 100.00, 1, 800.00);
+
+
+		/*
+		*-----------------------------------------
+		*|       Adiciona lista de objetos       |
+		*-----------------------------------------
+		*/
 		cat1.getProdutos().addAll(Arrays.asList(p1,p2,p3));
 		cat2.getProdutos().addAll(Arrays.asList(p2));
 
@@ -89,7 +107,18 @@ public class CursomcApplication implements CommandLineRunner {
 		cli1.getEnderecos().addAll(Arrays.asList(e1,e2));
 		cli1.getPedidos().addAll(Arrays.asList(ped1,ped2));
 
+		ped1.getItens().addAll(Arrays.asList(ip1,ip2));
+		ped2.getItens().addAll(Arrays.asList(ip3));
 
+		p1.getItens().addAll(Arrays.asList(ip1));
+		p2.getItens().addAll(Arrays.asList(ip3));
+		p3.getItens().addAll(Arrays.asList(ip2));
+
+		/*
+		*---------------------------------------------------------------
+		*|       Salva as listas de objetos no banco de dados h2       |
+		*---------------------------------------------------------------
+		*/
 		categoriaRepository.saveAll(Arrays.asList(cat1, cat2));
 		produtoRepository.saveAll(Arrays.asList(p1,p2,p3));
 		estadoRepository.saveAll(Arrays.asList(est1,est2));
@@ -97,8 +126,8 @@ public class CursomcApplication implements CommandLineRunner {
 		clienteRepository.saveAll(Arrays.asList(cli1));
 		enderecoRepository.saveAll(Arrays.asList(e1,e2));
     pedidoRepository.saveAll(Arrays.asList(ped1,ped2));
-    //Se descomentar o save do pagamento, o sistema da erro, se deixar comentado o sistema insere na tabela pagamento mesmo se o camando Save .-------------.
 		pagamentoRepository.saveAll(Arrays.asList(pgto1,pgto2));
+		itemPedidoRepository.saveAll(Arrays.asList(ip1,ip2,ip3));
 
 	}
 }
