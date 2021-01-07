@@ -1,6 +1,7 @@
 package com.nelioalves.cursomc.domain;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -35,21 +36,18 @@ public class Produto implements Serializable{
   private List<Categoria> categorias = new ArrayList<>();
 
   //Set é uma coleção tal qual o List porém o Set garante que não existirá itens repetidos dentro da coleção
+  @JsonIgnore
   @OneToMany(mappedBy = "id.produto")
   private Set<ItemPedido> itens = new HashSet<>();
 
 
-
-
-
+  @JsonIgnore
   private List<Pedido> getPedidos(){
-
     List<Pedido> lista = new ArrayList<>();
 
     for(ItemPedido x : itens){
       lista.add(x.getPedido());
     }
-
     return lista;
   }
 

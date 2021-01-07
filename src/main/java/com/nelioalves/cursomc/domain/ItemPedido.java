@@ -1,5 +1,6 @@
 package com.nelioalves.cursomc.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.EmbeddedId;
@@ -26,14 +27,16 @@ public class ItemPedido implements Serializable {
   //Classe de relacionamento Item x Pedido n deve possuir ID proprio, deve-se ter uma chave composta a partir da classe Item e a classe Pedido
   //Nesse caso o id será a instancia da classe ItemPedidoPK
 
-  //Id imbutido por uma classe auxiliar
+  //@EmbeddedId - Id imbutido por uma classe auxiliar
+  @JsonIgnore
   @EmbeddedId
   private ItemPedidoPK id = new ItemPedidoPK();
+
   private Double desconto;
   private Integer quantidade;
   private Double preco;
 
-
+  @JsonIgnore
   public Pedido getPedido(){
     return id.getPedido();
   }
