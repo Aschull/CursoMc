@@ -125,7 +125,7 @@ public class CursomcApplication implements CommandLineRunner {
 		cidadeRepository.saveAll(Arrays.asList(c1,c2,c3));
 		clienteRepository.saveAll(Arrays.asList(cli1));
 		enderecoRepository.saveAll(Arrays.asList(e1,e2));
-    pedidoRepository.saveAll(Arrays.asList(ped1,ped2));
+        pedidoRepository.saveAll(Arrays.asList(ped1,ped2));
 		pagamentoRepository.saveAll(Arrays.asList(pgto1,pgto2));
 		itemPedidoRepository.saveAll(Arrays.asList(ip1,ip2,ip3));
 
